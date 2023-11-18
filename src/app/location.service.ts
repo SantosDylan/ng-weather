@@ -1,33 +1,38 @@
-import { Injectable } from '@angular/core';
-import {WeatherService} from "./weather.service";
+import { Injectable, effect, signal } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
 
-export const LOCATIONS : string = "locations";
+export const LOCATIONS: string = 'locations';
 
 @Injectable()
 export class LocationService {
+  public readonly locations = signal<string[]>([]);
 
-  locations : string[] = [];
+  private readonly _add = new ReplaySubject<string>();
+  private readonly _remove = new ReplaySubject<string>();
 
-  constructor(private weatherService : WeatherService) {
-    let locString = localStorage.getItem(LOCATIONS);
-    if (locString)
-      this.locations = JSON.parse(locString);
-    for (let loc of this.locations)
-      this.weatherService.addCurrentConditions(loc);
+  public readonly add$ = this._add.asObservable();
+  public readonly remove$ = this._remove.asObservable();
+
+  constructor() {
+    this.initLocation();
+    effect(() => localStorage.setItem(LOCATIONS, JSON.stringify(this.locations())));
   }
 
-  addLocation(zipcode : string) {
-    this.locations.push(zipcode);
-    localStorage.setItem(LOCATIONS, JSON.stringify(this.locations));
-    this.weatherService.addCurrentConditions(zipcode);
-  }
-
-  removeLocation(zipcode : string) {
-    let index = this.locations.indexOf(zipcode);
-    if (index !== -1){
-      this.locations.splice(index, 1);
-      localStorage.setItem(LOCATIONS, JSON.stringify(this.locations));
-      this.weatherService.removeCurrentConditions(zipcode);
+  private initLocation() {
+    let locationLS = localStorage.getItem(LOCATIONS);
+    if (locationLS) {
+      const locations: string[] = JSON.parse(locationLS);
+      locations.forEach((zip) => this.addLocation(zip));
     }
+  }
+
+  public addLocation(newLocation: string) {
+    this.locations.update((locations) => [...locations, newLocation]);
+    this._add.next(newLocation);
+  }
+
+  public removeLocation(zipcode: string) {
+    this.locations.update((locations) => locations.filter((location) => location !== zipcode));
+    this._remove.next(zipcode);
   }
 }
