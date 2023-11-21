@@ -23,12 +23,12 @@ export class WeatherService {
           this.getCurrentConditions$(zip).pipe(
             catchError((err: HttpErrorResponse) => {
               if (err.status === 404) {
-                this.location.removeLocation(zip);
-                alert(`City not found with zipcode : ${zip}`)
+                this.location.removeLocationByZipCode(zip);
+                alert(`City not found with zipcode : ${zip}`);
                 return EMPTY;
               }
             }),
-            map((currentConditions) => ({ data: currentConditions, zip }))
+            map((currentConditions) => ({ data: { ...currentConditions, tabTitle: `${currentConditions.name} (${zip})` }, zip }))
           )
         )
       )

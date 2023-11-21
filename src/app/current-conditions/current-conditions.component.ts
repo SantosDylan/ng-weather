@@ -14,14 +14,14 @@ export class CurrentConditionsComponent {
   private router = inject(Router);
   protected locationService = inject(LocationService);
   protected currentConditionsByZip: Signal<ConditionsAndZip[]> = this.weatherService.getCurrentConditions();
+  selectedIndex = 0;
 
   showForecast(event: Event, zipcode: string) {
     event.stopPropagation();
     this.router.navigate(['/forecast', zipcode]);
   }
 
-  public onClose(event: Event, zip: string) {
-    event.stopPropagation();
-    this.locationService.removeLocation(zip);
+  public onClose(index: number) {
+    this.locationService.removeLocationByIndex(index);
   }
 }

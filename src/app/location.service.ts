@@ -31,8 +31,12 @@ export class LocationService {
     this._add.next(newLocation);
   }
 
-  public removeLocation(zipcode: string) {
+  public removeLocationByZipCode(zipcode: string) {
     this.locations.update((locations) => locations.filter((location) => location !== zipcode));
     this._remove.next(zipcode);
+  }
+
+  public removeLocationByIndex(index: number) {
+    this.removeLocationByZipCode(this.locations()[index]);
   }
 }

@@ -1,0 +1,16 @@
+.tabs--wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.tab {
+    padding: 1rem;
+    border: 1px solid rgb(200, 200, 200);
+    cursor: pointer;
+
+}
+
+.tab--selected {
+    background-color: #337ab7;
+    color: white;
+}
