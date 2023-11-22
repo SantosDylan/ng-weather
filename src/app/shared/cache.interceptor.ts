@@ -13,7 +13,7 @@ export class CacheInterceptor implements HttpInterceptor {
     return cacheResponse ? of(cacheResponse) : this.sendRequest(req, next, cacheService);
   }
 
-  sendRequest(req: HttpRequest<unknown>, next: HttpHandler, cacheService: CacheService): Observable<HttpEvent<unknown>> {
+  private sendRequest(req: HttpRequest<unknown>, next: HttpHandler, cacheService: CacheService): Observable<HttpEvent<unknown>> {
     return next.handle(req).pipe(
       tap((stateEvent) => {
         if (stateEvent instanceof HttpResponse) {
