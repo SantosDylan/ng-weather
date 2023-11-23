@@ -29,7 +29,7 @@ import { ZipcodeEntryComponent } from './zipcode-entry/zipcode-entry.component';
     HttpClientModule,
     RouterModule,
     routing,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('/ng-weather/ngsw-worker.js', { enabled: environment.production }),
     TabsComponent,
     TabComponent,
     CachingSystemDurationComponent,

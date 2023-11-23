@@ -90,6 +90,12 @@
               "src/manifest.json"
             ]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "/ng-weather/"
+          }
         }
       }
     },
