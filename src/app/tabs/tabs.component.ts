@@ -28,9 +28,9 @@ export class TabsComponent {
   @Output() onClose = new EventEmitter<number>();
 
   onTabClose(id: number) {
-    if (this.tabs.toArray().length > 1) {
+    if (this.selectedIndex === id || this.tabs.toArray().length === 2) {
       this.selectedIndex = 0; // Select the first tab
-      this.onClose.emit(id)
     }
+    this.onClose.emit(id)
   }
 }
