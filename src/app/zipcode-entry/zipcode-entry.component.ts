@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {LocationService} from "../location.service";
+import { LocationService } from "../location.service";
 
 @Component({
   selector: 'app-zipcode-entry',
@@ -9,8 +9,11 @@ export class ZipcodeEntryComponent {
 
   constructor(private service : LocationService) { }
 
-  addLocation(zipcode : string){
-    this.service.addLocation(zipcode);
+  addLocation(zipcode : HTMLInputElement){
+    this.service.addLocation(zipcode.value);
+    // Reset input
+    zipcode.value = '';
+    
   }
 
 }
