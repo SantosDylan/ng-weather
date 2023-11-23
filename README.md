@@ -1,3 +1,7 @@
+# Live Demo
+
+🔴 [Live Demo](https://santosdylan.github.io/ng-weather)
+
 # NgWeather
 
 An app that showcases how to build a simple app with Angular (running on 14.x)
